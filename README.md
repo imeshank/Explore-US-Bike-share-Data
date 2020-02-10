@@ -13,4 +13,12 @@ This project will use data provided by [Motivate](https://www.motivateco.com/), 
 bikeshare.py
 
 ### Credits
-[Pandas API reference](https://pandas.pydata.org/pandas-docs/stable/reference/index.html)
+1. [Pandas API reference](https://pandas.pydata.org/pandas-docs/stable/reference/index.html)
+
+2. [geeksforgreeks](https://www.geeksforgeeks.org/dealing-with-rows-and-columns-in-pandas-dataframe/)
+
+3. stackoverflow
+
+    * https://stackoverflow.com/questions/43772362/how-to-print-a-specific-row-of-a-pandas-dataframe/51626766
+
+    *https://stackoverflow.com/questions/21800169/python-pandas-get-index-of-rows-which-column-matches-certain-value
