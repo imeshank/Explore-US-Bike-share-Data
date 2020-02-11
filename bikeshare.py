@@ -27,30 +27,30 @@ def get_filters():
     #checks whether user input a correct city
     while (city.lower() not in CITY_DATA):
         city = input("Please enter a correct city: Chicago, New York, or Washington?\n").strip().lower()
-        
+
     #get user input for filter
     filter = input("Would you like to filter the data by month, day, both, or not at all? Type 'none' for no time filter\n").strip().lower()
     month = 'all'
     day = 'all'
-    
+
     if(filter == 'month' or filter == 'both'):
         # get user input for month (all, january, february, ... , june)
         month = input("Which month? January, February, March, April, May, June? Please type out the full month name\n").strip().lower()
         while month.lower() not in months:
             month = input("Please enter a correct month? January, February, March, April, May, June? Please type out the full month name\n").strip().lower()
-           
+
     if(filter == 'day' or filter == 'both'):
         # get user input for day of week (all, monday, tuesday, ... sunday)
         day = input("Which day? Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday? Please type out the full name\n").strip().lower()
         while day.lower() not in days:
             day = input("Please enter a correct day? Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday? Please type out the full name\n").strip().lower()
-                    
-   
+
+
     print("\nData are filtered by,  City: {},   Month: {},   Day: {}\n".format(city.title(), month.title(), day.title()))
 
 
     print('-'*40)
-    return city, month, day 
+    return city, month, day
 
 
 def load_data(city, month, day):
@@ -64,7 +64,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
 
@@ -97,30 +97,30 @@ def time_stats(df, month, day):
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
-    
+
     if month == 'all':
         # TO DO: display the most common month and it's frequency
         most_common_month = int(df['month'].mode())
         count = df['month'].value_counts()[most_common_month]
         print("Most common month of travel: {}     Count:{}".format(months[most_common_month-1].title(), count))
-   
+
     if day == 'all':
         # TO DO: display the most common day of week and it's frequency
         most_common_day = str(df['day_of_week'].mode()[0])
         count = df['day_of_week'].value_counts()[most_common_day]
         print("Most common day of travel: {}      Count:{}".format(most_common_day, count))
-    
+
     # TO DO: display the most common start hour
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     # extract hour from the Start Time column to create an hour column
     df['hour'] = df['Start Time'].dt.hour
-    
+
     # find the most common start hour (from 0 to 23) and it's frequency
     most_common_start_hour = df['hour'].mode()[0]
     count = df['hour'].value_counts()[most_common_start_hour]
     print("Most common start hour for travel: {}      Count:{}".format(most_common_start_hour, count))
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -146,7 +146,7 @@ def station_stats(df):
     most_common_bike_route = df['Start End Stations'].mode()[0]
     count = df['Start End Stations'].value_counts()[most_common_bike_route]
     print("Most frequent combination of start and end stations: \n{}(Start station) and {}(End station)      Count:{}".format(most_common_bike_route.split('+')[0],most_common_bike_route.split('+')[1], count))
-    
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -162,7 +162,7 @@ def trip_duration_stats(df):
     total_time = df['Trip Duration'].sum()
     count = df['Trip Duration'].count()
     print("Total travel time: {}      Count:{}".format(total_time, count))
-    
+
     # TO DO: display mean travel time
     mean_time = df['Trip Duration'].mean()
     print("Mean travel time: {}".format(mean_time))
@@ -187,27 +187,27 @@ def user_stats(df, city):
         male_count = df['Gender'].value_counts()['Male']
         female_count = df['Gender'].value_counts()['Female']
         print("Male user count: {}     Female user count: {}".format(male_count, female_count))
-        
+
         # TO DO: Display earliest, most recent, and most common year of birth
         earliest_birth_year = df['Birth Year'].min()
         recent_birth_year = df['Birth Year'].max()
         common_birth_year = df['Birth Year'].mode()[0]
-        print("\nEarliest year of birth of users: {} \nMost recent year of birth of users: {} \nMost common year of birth if users: {}".format(earliest_birth_year, recent_birth_year, common_birth_year))  
-                   
+        print("\nEarliest year of birth of users: {} \nMost recent year of birth of users: {} \nMost common year of birth if users: {}".format(earliest_birth_year, recent_birth_year, common_birth_year))
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
-def trip_data(df):
+
+def individual_trip_stats(df):
     """ Display individual trip data"""
     counter = 0
-    
+
     display_data = input("Would you like to view individual trip data? Type 'yes' or 'no'\n")
     while display_data.lower().strip() == 'yes':
         df = df[counter:counter+5]
         # get indexes of the dataframe, here assumed all dataframe rows have value for 'Start Station'
         indexes = df.index[df['Start Station'] != ' '].tolist()
-                     
+
         for i in indexes:
             print("\n")
             print(df.loc[i])
@@ -225,7 +225,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df, city)
-        trip_data(df)
+        individual_trip_stats(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower().strip() != 'yes':
