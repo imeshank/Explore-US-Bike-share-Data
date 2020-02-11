@@ -1,6 +1,6 @@
 import time
 import pandas as pd
-import numpy as np
+
 
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york': 'new_york_city.csv',
@@ -154,9 +154,9 @@ def station_stats(df):
     print("Most commonly used end station is: {}      Count:{}".format(end_station, count))
 
     # TO DO: display most frequent combination of start station and end station trip
-    df['Start End Stations'] = df['Start Station']+ '+' +df['End Station']
-    most_common_bike_route = df['Start End Stations'].mode()[0]
-    count = df['Start End Stations'].value_counts()[most_common_bike_route]
+    df['Complete trip'] = df['Start Station']+ '+' +df['End Station']
+    most_common_bike_route = df['Complete trip'].mode()[0]
+    count = df['Complete trip'].value_counts()[most_common_bike_route]
     print("Most frequent combination of start and end stations: \n{}(Start station) and {}(End station)      Count:{}".format(most_common_bike_route.split('+')[0],most_common_bike_route.split('+')[1], count))
 
 
@@ -221,7 +221,7 @@ def user_stats(df, city):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-def trip_data(df):
+def individual_trip_stats(df):
     """
     Display individual trip data
 
@@ -253,7 +253,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df, city)
-        trip_data(df)
+        individual_trip_stats(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower().strip() != 'yes':
