@@ -21,4 +21,4 @@ bikeshare.py
 
     * https://stackoverflow.com/questions/43772362/how-to-print-a-specific-row-of-a-pandas-dataframe/51626766
 
-    *https://stackoverflow.com/questions/21800169/python-pandas-get-index-of-rows-which-column-matches-certain-value
+    * https://stackoverflow.com/questions/21800169/python-pandas-get-index-of-rows-which-column-matches-certain-value
